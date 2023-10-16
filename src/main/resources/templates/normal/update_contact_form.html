@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Contact</title>
+</head>
+<body>
+<section>
+    <!--    Message Block-->
+    <div th:if="${session.message}" class="container">
+        <div th:classappend="${'alert-'+session.message.type}" class="alert text-center">
+            <span th:text="${session.message.content}"></span>
+        </div>
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+    <!--    Message Block End-->
+
+    <div class="card mr-3 ml-3">
+        <div class="card-body">
+            <h1 class="text-center">Update Contact</h1>
+            <div class="container-fluid mt-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <form action="#"
+                              th:object="${contact}"
+                              enctype="multipart/form-data"
+                              method="post"
+                              th:action="@{/user/process-update-contact}"
+                              class="mt-2"
+                        >
+                            <input type="hidden" th:value="${contact.cId}" name="cId"/>
+                            <div class="container text-center">
+                                <img style="height: 100px; width: 100px;" class="profile-picture" src=""
+                                     th:src="@{'/img/'+${contact.image}}" alt="Profile Photo"/>
+                            </div>
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa-solid fa-signature"></i>
+                                    </div>
+                                </div>
+                                <input type="text"
+                                       id="name"
+                                       name="name"
+                                       th:value="${contact.name}"
+                                       placeholder="Enter your name"
+                                       class="form-control"
+                                       required/>
+                            </div>
+
+                            <!--              <div class="input-group mt-3">-->
+                            <!--                <div class="input-group-prepend">-->
+                            <!--                  <div class="input-group-text">-->
+                            <!--                    <i class="fa-solid fa-signature"></i>-->
+                            <!--                  </div>-->
+                            <!--                </div>-->
+                            <!--                <input type="text"-->
+                            <!--                       id="secondName"-->
+                            <!--                       name="secondName"-->
+                            <!--                       placeholder="Enter second/last name"-->
+                            <!--                       class="form-control" />-->
+                            <!--              </div>-->
+
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa-solid fa-briefcase"></i>
+                                    </div>
+                                </div>
+                                <input type="text"
+                                       id="work"
+                                       name="work"
+                                       th:value="${contact.work}"
+                                       placeholder="Enter your profession"
+                                       class="form-control"
+                                       required/>
+                            </div>
+
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                </div>
+                                <input type="email"
+                                       id="email"
+                                       name="email"
+                                       th:value="${contact.email}"
+                                       placeholder="Enter email address"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                </div>
+                                <input type="number"
+                                       id="phone"
+                                       name="phone"
+                                       th:value="${contact.phone}"
+                                       placeholder="Enter phone number"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group mt-3">
+                <textarea id="description"
+                          name="description"
+                          placeholder="Enter description"
+                          th:text="${contact.description}"
+                          class="form-control"
+                          rows="10"></textarea>
+                            </div>
+
+                            <div class="custom-file">
+                                <input type="file" name="profile"/>
+                            </div>
+
+                            <div class="container text-center">
+                                <button class="btn btn-outline-primary">Update Contact</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#description'
+      });
+
+
+    </script>
+</section>
+</body>
+</html>

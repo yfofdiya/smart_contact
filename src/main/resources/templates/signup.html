@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>This is signup page</title>
+</head>
+<body>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="my-card mt-2">
+
+                    <!--Conditional check for success/error while registration-->
+                    <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+                        <p class="text-center" th:text="${session.message.content}"></p>
+                        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+                    </div>
+
+                    <div class="container text-center">
+                        <img style="width:80px;" src="" th:src="@{/img/register.png}"/>
+                    </div>
+                    <h1 class="text-center">Register Here</h1>
+                    <!--novalidate = use to remove client side validation-->
+                    <form action=""
+                          th:action="@{/register}"
+                          method="post"
+                          th:object="${user}"
+                          enctype="multipart/form-data"
+                          class="mt-2"
+                    >
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+                                    id="name"
+                                    name="name"
+                                    aria-describedby="nameHelp"
+                                    placeholder="Enter your name"
+                                    required
+                                    th:value="${user.name}"
+                            />
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    aria-describedby="emailHelp"
+                                    placeholder="Enter your email"
+                                    required
+                                    th:value="${user.email}"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                                    aria-describedby="passwordHelp"
+                                    placeholder="Enter password"
+                                    required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="about">About you</label>
+                            <textarea th:text="${user.aboutUser}" id="about" name="aboutUser"
+                                      placeholder="Enter something about yourself" rows="8"
+                                      class="form-control"></textarea>
+                        </div>
+
+                        <div class="custom-file">
+                            <input type="file" name="profile"/>
+                        </div>
+
+                        <div class="form-group form-check text-center">
+                            <input type="checkbox" name="agreement" class="form-check-input" id="agreement">
+                            <label for="agreement">Accept terms and conditions</label>
+                        </div>
+
+                        <div class="container text-center">
+                            <button type="submit" class="btn bg-primary text-white">Submit</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#about'
+      });
+    </script>
+</section>
+</body>
+</html>
